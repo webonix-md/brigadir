@@ -32,7 +32,7 @@
   --sh-lg:0 2px 4px rgba(40,40,30,.03),0 40px 70px -30px rgba(40,40,30,.32);
   --x3d:0.010em 0.011em 0 #1F2024,0.06em 0.09em 0.1em rgba(30,30,25,.2);
   --x3d-sm:0.010em 0.011em 0 #1A1B1F,0.04em 0.07em 0.1em rgba(30,30,25,.18);
-  --x3d-acc:0.010em 0.011em 0 var(--acc-ink),0.07em 0.1em 0.1em rgba(var(--acc-rgb),.2);
+  --x3d-acc:0.010em 0.011em 0 var(--acc-e1),0.07em 0.1em 0.1em rgba(var(--acc-rgb),.2);
   --x3d-light:0.010em 0.011em 0 #C4C6CC,0.06em 0.09em 0.12em rgba(0,0,0,.25);
   --b3d:1px 1px 0 #DDDDD8,6px 12px 20px -10px rgba(40,40,30,.35),inset 0 1px 0 #fff;
   --b3d-h:1px 1px 0 #DDDDD8,2px 2px 0 #D4D4CF,3px 3px 0 #CBCBC6,8px 18px 26px -10px rgba(40,40,30,.38),inset 0 1px 0 #fff;
