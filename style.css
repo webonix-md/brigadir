@@ -199,7 +199,7 @@ a.mega__h:hover .ico--tile{color:var(--acc);box-shadow:0 1px 0 #fff inset,0 3px 
 .svc__card{position:relative;display:flex;flex-direction:column;gap:14px;padding:22px;border-radius:var(--r);background:var(--surface);box-shadow:var(--c3d);transition:transform .15s ease,box-shadow .15s ease}
 .svc__card:hover{box-shadow:var(--c3d-h);transform:translate(-1px,-1px)}
 .svc__card:hover .ico--tile{color:var(--acc);box-shadow:0 1px 0 #fff inset,0 3px 0 #E6E6E2,0 10px 22px -8px var(--glow)}
-.svc__top{display:flex;justify-content:space-between;align-items:flex-start}
+.svc__top{display:none;justify-content:space-between;align-items:flex-start}
 .svc__n{font:500 12px/1 var(--sans);color:var(--muted);padding:6px 8px;border-radius:8px;background:var(--surface-2)}
 .svc__t{font:500 21px/1.2 var(--sans);letter-spacing:-.015em}
 .svc__t a{text-decoration:none}
