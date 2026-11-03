@@ -3,6 +3,19 @@
   'use strict';
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   
+  var here = location.pathname.replace(/index\.html$/, '');
+  var inServices = false;
+  document.querySelectorAll('.header a[href], .mnav a[href]').forEach(function (a) {
+    if (a.hostname !== location.hostname || a.hasAttribute('hreflang')) return;
+    var p = a.pathname.replace(/index\.html$/, '');
+    if (p === here && !a.classList.contains('logo') && !a.closest('.mega__foot')) {
+      a.setAttribute('aria-current', 'page');
+      if (a.closest('.mega__grid')) inServices = true;
+    }
+  });
+  var svcBtn = document.querySelector('.nav__item--dd > .nav__a');
+  if (svcBtn && inServices) svcBtn.setAttribute('aria-current', 'true');
+  
   var dd = document.querySelector('.nav__item--dd');
   if (dd) {
     var ddBtn = dd.querySelector('.nav__a');
@@ -111,4 +124,39 @@
   } else {
     rv.forEach(function (el) { el.classList.add('is-in'); });
   }
+})();
+(function () {
+  var c = document.querySelector('[data-calc]');
+  if (!c) return;
+  var num = function (s) { return parseInt(String(s).replace(/\D/g, ''), 10) || 0; };
+  var TRIP = num(c.dataset.trip), SPUSK = num(c.dataset.spusk), PER = num(c.dataset.bagsPerTrip) || 90;
+  var range = c.querySelector('[data-in="bags"]');
+  var fmt = function (n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '\u00a0'); };
+  var out = function (k, v) { var el = c.querySelector('[data-out="' + k + '"]'); if (el) el.textContent = v; };
+  var plural = function (n, a, b, d) { var m = n % 10, h = n % 100; return m === 1 && h !== 11 ? a : m >= 2 && m <= 4 && (h < 12 || h > 14) ? b : d; };
+  var pick = function (name) { var on = c.querySelector('[data-in="' + name + '"] [aria-pressed="true"]'); return on ? +on.dataset.v : 0; };
+  function calc() {
+    var bags = +range.value, floor = pick('floor'), down = pick('down'), lift = pick('lift');
+    var trips = Math.max(1, Math.ceil(bags / PER));
+    var floors = floor;
+    var hourly = !down && (floor <= 2 || lift);
+    var spusk = down || hourly ? 0 : bags * floors * SPUSK;
+    out('bags', bags);
+    out('trips', trips + ' ' + plural(trips, 'рейс', 'рейса', 'рейсов'));
+    out('vyvoz', fmt(trips * TRIP));
+    out('spusk-txt', down ? 'не нужен' : hourly ? 'почасово, ' + c.dataset.hour + ' лей/час' : bags + ' ' + plural(bags, 'мешок', 'мешка', 'мешков') + ' × ' + floors + ' ' + plural(floors, 'этаж', 'этажа', 'этажей'));
+    out('spusk', hourly ? '+ грузчики' : fmt(spusk) + ' лей');
+    c.querySelector('[data-out="spusk"]').closest('li').classList.toggle('is-off', !!down);
+    out('sum', fmt(trips * TRIP + spusk) + (hourly ? '+' : ''));
+    range.style.setProperty('--p', ((bags - range.min) / (range.max - range.min) * 100) + '%');
+  }
+  range.addEventListener('input', calc);
+  c.querySelectorAll('.calc__opts').forEach(function (g) {
+    g.addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      g.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+      calc();
+    });
+  });
+  calc();
 })();
